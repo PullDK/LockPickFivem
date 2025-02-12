@@ -57,7 +57,15 @@ function init(correct) {
     ctx.fillText(key_to_press, W / 2 - text_width / 2, H / 2 + 35);
 }
 
-let rotation_interval = 8; // Intervalo de tempo entre cada atualização do ângulo (em milissegundos)
+let rotation_interval = 100; // Intervalo de tempo padrão (em milissegundos)
+
+// Adicionando um listener para o controle deslizante
+document.getElementById('speed').addEventListener('input', function() {
+    rotation_interval = 100 - parseInt(this.value); // Inverte a lógica: 0 = mais rápido, 100 = mais lento
+    document.getElementById('current-speed').innerText = this.value; // Atualiza a exibição da velocidade
+    clearInterval(animation_loop); // Limpa o intervalo atual
+    draw(); // Reinicia o desenho com a nova velocidade
+});
 
 function draw() {
     if (typeof animation_loop !== undefined) clearInterval(animation_loop);
